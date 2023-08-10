@@ -1,11 +1,11 @@
 class Transaction:
     def __init__(self, dictionary):
-        self.date = dictionary['date']
-        self.description = dictionary['description']
-        self.__from_whom = dictionary['from_whom']
-        self.__to_whom = dictionary['to_whom']
-        self.amount = dictionary['amount']
-        self.currency = dictionary['currency']['name']
+        self.date = dictionary.get('date')
+        self.description = dictionary.get('description')
+        self.__from_whom = dictionary.get('from')
+        self.__to_whom = dictionary.get('to')
+        self.amount = dictionary['operationAmount']["amount"]
+        self.currency = dictionary['operationAmount']['currency']['name']
 
     @classmethod
     def __build_account(cls, string: str) -> str:
@@ -33,6 +33,11 @@ class Transaction:
         return day + '.' + month + '.' + year
 
     def get_transaction_form(self):
-        return f"""{self.get_date()} {self.description}\n
-            {self.get_from()} -> {self.get_to()}\n
-            {self.amount} {self.currency}"""
+        if self.__from_whom is None:
+            return (f"{self.get_date()} {self.description}\n"
+                    f"{self.get_to()}\n"
+                    f"{self.amount} {self.currency}\n")
+        else:
+            return (f"{self.get_date()} {self.description}\n"
+                    f"{self.get_from()} -> {self.get_to()}\n"
+                    f"{self.amount} {self.currency}\n")
