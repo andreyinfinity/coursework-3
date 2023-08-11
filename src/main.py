@@ -1,8 +1,9 @@
-from utils.functions import load_file, filter_dictionary_list, sorted_dictionary_list, create_last_transactions
+from utils.functions import load_file, filter_dictionary_list, sorted_dictionary_list
+from utils.transactions import Transactions
 
 # Путь к файлу со всеми транзакциями и количество последних транзакций для вывода
 OPERATIONS = "data/operations.json"
-last_transactions = 5
+last_transactions = 8
 
 all_operations = load_file(OPERATIONS)
 
@@ -10,7 +11,7 @@ executed_operations = filter_dictionary_list(all_operations, 'state', 'EXECUTED'
 
 sorted_dictionary_list(executed_operations, 'date')
 
-transactions = create_last_transactions(executed_operations, last_transactions)
+new_array = executed_operations[:last_transactions]
+transactions = Transactions(new_array)
 
-for transaction in transactions:
-    print(transaction.get_transaction_form())
+print(*transactions.take_statistic(), sep='\n')

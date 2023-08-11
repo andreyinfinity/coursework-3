@@ -1,5 +1,4 @@
 import json
-from utils.transaction import Transaction
 
 
 def load_file(filepath: str) -> list:
@@ -20,13 +19,3 @@ def sorted_dictionary_list(array: list, key):
     def get_value(dictionary: dict, *args) -> str:
         return dictionary.get(key)
     return array.sort(key=get_value, reverse=True)
-
-
-def create_last_transactions(array: list, quantity: int):
-    """Создает экземпляры класса Transaction с 'quantity' операциями"""
-    transactions = []
-    new_array = array[:quantity]
-    for i in range(quantity):
-        item = Transaction(new_array[i])
-        transactions.append(item)
-    return transactions
