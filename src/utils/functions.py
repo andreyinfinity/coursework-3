@@ -2,37 +2,31 @@ import json
 from utils.transaction import Transaction
 
 
-def load_file(filepath) -> list:
+def load_file(filepath: str) -> list:
     """Открывает файл *.json"""
     with open(filepath, 'r', encoding='utf-8') as file:
         return json.load(file)
 
 
-def filter_executed(array):
-    """Возвращает список выполненных транзакций"""
-    # фильтр реализован через перебор по списку словарей с получением ключа по методу get,
-    # чтобы избежать ошибки, если в словарь окажется пустой или с отсутствующим ключом
-    new_array = []
-    for item in array:
-        if item.get('state') == 'EXECUTED':
-            new_array.append(item)
-    return new_array
+def filter_dictionary_list(array: list, key, value) -> list:
+    """Возвращает список словарей со значением 'value' в ключе 'key'."""
+    def get_value(dictionary: dict,*args) -> bool:
+        return dictionary.get(key) == value
+    return list(filter(get_value, array))
 
 
-def get_value(dictionary: dict) -> str:
-    return dictionary.get('date')
-
-
-def sorted_by_date(array):
-    """Сортирует список по ключу 'date' по убыванию даты"""
+def sorted_dictionary_list(array: list, key):
+    """Сортирует список словарей по ключу 'key' по убыванию."""
+    def get_value(dictionary: dict, *args) -> str:
+        return dictionary.get(key)
     return array.sort(key=get_value, reverse=True)
 
 
-def create_list_transactions(array: list, total: int):
-    """Создает экземпляры класса Transaction с 5 последними операциями"""
+def create_last_transactions(array: list, quantity: int):
+    """Создает экземпляры класса Transaction с 'quantity' операциями"""
     transactions = []
-    new_array = array[:total]
-    for i in range(total):
+    new_array = array[:quantity]
+    for i in range(quantity):
         item = Transaction(new_array[i])
         transactions.append(item)
     return transactions
