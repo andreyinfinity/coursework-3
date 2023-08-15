@@ -3,8 +3,9 @@ from utils.transactions import Transactions
 
 # Путь к файлу со всеми транзакциями и количество последних транзакций для вывода
 OPERATIONS = "data/operations.json"
-last_transactions = 8
+last_transactions = 5
 
+# Загрузка файла с транзакциями
 all_operations = load_file(OPERATIONS)
 
 executed_operations = filter_dictionary_list(all_operations, 'state', 'EXECUTED')
