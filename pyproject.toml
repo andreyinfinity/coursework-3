@@ -8,6 +8,8 @@ packages = [{include = "coursework_3"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
 
 
 [build-system]

@@ -14,8 +14,9 @@ def filter_dictionary_list(array: list, key, value) -> list:
     return list(filter(get_value, array))
 
 
-def sorted_dictionary_list(array: list, key):
+def sorted_dictionary_list(array: list, key) -> list:
     """Сортирует список словарей по ключу 'key' по убыванию."""
     def get_value(dictionary: dict, *args) -> str:
         return dictionary.get(key)
-    return array.sort(key=get_value, reverse=True)
+    array.sort(key=get_value, reverse=True)
+    return array
